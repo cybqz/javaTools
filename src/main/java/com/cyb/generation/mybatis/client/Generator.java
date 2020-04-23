@@ -151,18 +151,31 @@ public class Generator {
 		List<ColumnDefinition> columnDefinitionList = tableDefinition.getColumnDefinitions();
 		
 		context.put("context", sqlContext);
-		context.put("param", sqlContext.getParam());
 		context.put("table", tableDefinition);
-		context.put("pk", tableDefinition.getPkColumn());
+		context.put("param", sqlContext.getParam());
 		context.put("columns", columnDefinitionList);
-		context.put("valuesColumns", getValuesColumns(columnDefinitionList));
+		context.put("pk", tableDefinition.getPkColumn());
 		context.put("baseColumns", getBaseColumns(columnDefinitionList));
+		context.put("valuesColumns", getValuesColumns(columnDefinitionList));
+		context.put("valuesColumnsBatch", getValuesColumnsBatch(columnDefinitionList));
 		context.put("baseColumnsListExcludePK", getBaseColumnsListExcludePK(columnDefinitionList));
 
 		this.putImpls(context, sqlContext);
 		this.putExt(context, sqlContext);
 
 		return VelocityUtil.generate(context, template);
+	}
+
+	private String getValuesColumnsBatch(List<ColumnDefinition> columnDefinitionList){
+
+		StringBuilder stringBuilder = new StringBuilder();
+
+		for(ColumnDefinition columnDefinition : columnDefinitionList){
+			stringBuilder.append(",#{entity.").append(columnDefinition.getJavaFieldName()).append("}");
+		}
+
+		String result = stringBuilder.toString();
+		return result.substring(1, result.length());
 	}
 
 	private String getValuesColumns(List<ColumnDefinition> columnDefinitionList){

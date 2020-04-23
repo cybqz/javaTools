@@ -49,8 +49,8 @@ public class SqlTypeUtil {
 		javaBoxTypeMap.put("bit", "Boolean");
 		javaBoxTypeMap.put("blob", "Byte[]");
 		javaBoxTypeMap.put("char", "String");
-		javaBoxTypeMap.put("date", "Date");
-		javaBoxTypeMap.put("datetime", "Date");
+		javaBoxTypeMap.put("date", Constant.LOCAL_DATE);
+		javaBoxTypeMap.put("datetime", Constant.LOCAL_DATE_TIME);
 		javaBoxTypeMap.put("decimal", "BigDecimal");
 		javaBoxTypeMap.put("double", "Double");
 		javaBoxTypeMap.put("float", "Float");

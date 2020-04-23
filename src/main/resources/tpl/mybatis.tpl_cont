@@ -21,7 +21,7 @@
     <sql id="baseColumnsList">
         <choose>
             <when test="query.distinct">DISTINCT(t.${pk.columnName})</when>
-            <otherwise>t.${pk.columnName}</otherwise>
+            <otherwise>t.${pk.columnName},</otherwise>
         </choose>
         ${baseColumnsListExcludePK}
     </sql>
@@ -193,7 +193,7 @@
             (${baseColumns})
         VALUES
             <foreach collection="entitys" item="entity"  separator=",">
-                (${valuesColumns})
+                (${valuesColumnsBatch})
             </foreach>
     </insert>
 
@@ -202,7 +202,7 @@
         INSERT INTO ${table.tableName}
             (${baseColumns})
         <foreach collection="entitys" item="entity"  separator="UNION ALL">
-            SELECT  ${valuesColumns}
+            SELECT  ${valuesColumnsBatch}
         </foreach>
     </insert>
 
@@ -211,7 +211,7 @@
         INSERT INTO ${table.tableName}
             (${baseColumns})
         <foreach collection="entitys" item="entity"  separator="UNION">
-            SELECT  ${valuesColumns}
+            SELECT  ${valuesColumnsBatch}
         </foreach>
     </insert>
 
