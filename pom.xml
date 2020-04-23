@@ -39,6 +39,13 @@
             <version>${org.springframework-version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.18</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- 代码格式化 -->
         <dependency>
             <groupId>jalopy</groupId>

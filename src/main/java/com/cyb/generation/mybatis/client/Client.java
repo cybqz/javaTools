@@ -12,14 +12,19 @@ public class Client{
 	
     public void gen() {
 
-		String dest = System.getProperty("user.dir") +
-					  Constant.DEFAULT_OUR_DIR +
-					  DateFormatUtils.format(new Date(), "yyyy-MM-dd HH-mm-ss");
-
-		System.out.println("生成中:\r\n\tdest:\t" + dest);
+		String dest = "";
 
 		ClientParam clientParam = new ClientParam();
 		this.buildParam(clientParam);
+
+		if(StringUtils.isNotEmpty(clientParam.getBasePath())){
+			dest = clientParam.getBasePath();
+		}else{
+			dest = System.getProperty("user.dir") +
+					Constant.DEFAULT_OUR_DIR +
+					DateFormatUtils.format(new Date(), "yyyy-MM-dd HH-mm-ss");
+		}
+		System.out.println("dest:\t" + dest);
 		new Generator(clientParam, dest).generateCode();
 
 		System.out.println("生成完毕");
@@ -40,6 +45,7 @@ public class Client{
 			throw new RuntimeException(e1);
 		}
 
+		clientParam.setBasePath(properties.getProperty("basePath"));
 		clientParam.setCharset(properties.getProperty("charset"));
 
 		String excludeTableList = properties.getProperty("excludeTableList");

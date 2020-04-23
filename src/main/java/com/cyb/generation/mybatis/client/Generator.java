@@ -45,16 +45,24 @@ public class Generator {
 		FileUtil.createFolder(this.dest);
 
 		for (String tplFile : tplList) {
+			String dest = "";
 			TplInfo template = this.buildTempObj(tplFile.trim());
 			if (template == null) {
 				continue;
 			}
 			String content = doGenerator(sqlContext, template.getContent());
-
 			String fileName = doGenerator(sqlContext, template.getFileName());
-			String savePath = doGenerator(sqlContext,template.getSavePath());
+			String savePath = doGenerator(sqlContext, template.getSavePath());
 
 			content = this.formatCode(fileName, content);
+
+			if(fileName.indexOf(".java") > -1){
+
+				dest += this.dest + "java/" + this.clientParam.getPackageName().replace(".", File.separator);
+			}else if(fileName.indexOf(".xml") > -1){
+
+				dest = this.dest + "resources/";
+			}
 
 			String saveDir = dest + File.separator + savePath;
 

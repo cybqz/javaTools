@@ -43,6 +43,13 @@ public class FileUtil {
 			if(charset == null) {
 				charset = UTF8;
 			}
+			File file = new File(fileName);
+			if(file.exists()){
+				file.delete();
+				System.out.println("重写:\t"+fileName);
+			}else{
+				System.out.println("创建:\t"+fileName);
+			}
 			osw = new OutputStreamWriter(new FileOutputStream(fileName), charset);
 			osw.write(txt);
 			osw.flush();
