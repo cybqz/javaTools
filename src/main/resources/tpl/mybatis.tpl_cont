@@ -140,7 +140,6 @@
             </selectKey>
 #end
         INSERT INTO ${table.tableName}
-        COLUMN
              (${baseColumns})
         VALUES
             (${valuesColumns})
@@ -191,7 +190,6 @@
     <!-- 批量保存,保存全部字段 -->
     <insert id="saveBatch">
         INSERT INTO ${table.tableName}
-        COLUMN
             (${baseColumns})
         VALUES
             <foreach collection="entitys" item="entity"  separator=",">
@@ -202,7 +200,6 @@
     <!-- 批量保存(兼容),保存全部字段 -->
     <insert id="saveMulti">
         INSERT INTO ${table.tableName}
-        COLUMN
             (${baseColumns})
         <foreach collection="entitys" item="entity"  separator="UNION ALL">
             SELECT  ${valuesColumns}
@@ -212,7 +209,6 @@
     <!-- 批量保存(兼容),保存全部字段,忽略重复行 -->
     <insert id="saveMultiSet">
         INSERT INTO ${table.tableName}
-        COLUMN
             (${baseColumns})
         <foreach collection="entitys" item="entity"  separator="UNION">
             SELECT  ${valuesColumns}

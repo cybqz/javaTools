@@ -1,5 +1,6 @@
 package com.cyb.generation.mybatis.generator;
 
+import com.cyb.generation.common.Constant;
 import com.cyb.generation.mybatis.entity.DataBaseConfig;
 import com.cyb.generation.util.FieldUtil;
 import com.cyb.generation.util.UUIDUtil;
@@ -11,6 +12,7 @@ import java.util.List;
  * 数据库表定义,从这里可以获取表名,字段信息
  */
 public class TableDefinition {
+
 	private DataBaseConfig dataBaseConfig;
 	private String tableName; // 表名
 	private String comment; // 注释
@@ -19,8 +21,7 @@ public class TableDefinition {
 	
 	private List<ColumnDefinition> columnDefinitions = Collections.emptyList(); // 字段定义
 
-	public TableDefinition() {
-	}
+	public TableDefinition() {}
 
 	public TableDefinition(String tableName) {
 		this.tableName = tableName;
@@ -96,10 +97,20 @@ public class TableDefinition {
 	 * 是否含有时间字段
 	 * @return
 	 */
-	public boolean getHasDateField() {
+	public boolean getHasLocalDateField() {
 		List<ColumnDefinition> columns = getColumnDefinitions();
 		for (ColumnDefinition definition : columns) {
-			if("Date".equals(definition.getJavaType())) {
+			if(Constant.LOCAL_DATE.equals(definition.getJavaType())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean getHasLocalDateTimeField() {
+		List<ColumnDefinition> columns = getColumnDefinitions();
+		for (ColumnDefinition definition : columns) {
+			if(Constant.LOCAL_DATE_TIME.equals(definition.getJavaType())) {
 				return true;
 			}
 		}

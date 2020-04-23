@@ -170,7 +170,7 @@ public class Generator {
 		StringBuilder stringBuilder = new StringBuilder();
 
 		for(ColumnDefinition columnDefinition : columnDefinitionList){
-			stringBuilder.append(",#{").append(columnDefinition.getColumnName()).append("}");
+			stringBuilder.append(",#{").append(columnDefinition.getJavaFieldName()).append("}");
 		}
 
 		String result = stringBuilder.toString();

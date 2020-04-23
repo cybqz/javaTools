@@ -1,5 +1,7 @@
 package com.cyb.generation.mybatis.generator;
 
+import lombok.Data;
+
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +10,7 @@ import java.util.Map;
  * 最终会把SQL上下文信息放到velocity中
  */
 public class SQLContext {
+
     private TableDefinition tableDefinition; // 表结构定义
     private String packageName; // 包名
     private Map<Object, Object> param;
@@ -75,19 +78,4 @@ public class SQLContext {
     public void setParam(Map<Object, Object> param) {
         this.param = param;
     }
-
-    public static void main(String[] args) {
-
-        SQLContext[] tt = { new SQLContext(new TableDefinition("r_table_b")),
-                new SQLContext(new TableDefinition("MyTable")), new SQLContext(new TableDefinition("user.frontUser")),
-                new SQLContext(new TableDefinition("user.back_user")) };
-
-        for (SQLContext ctx : tt) {
-            System.out.println(ctx.getJavaBeanName());
-        }
-        /*
-         * 输出: RTableB MyTable UserFrontUser UserBackUser
-         */
-    }
-
 }

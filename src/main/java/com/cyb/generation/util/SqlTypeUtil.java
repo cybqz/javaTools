@@ -1,5 +1,7 @@
 package com.cyb.generation.util;
 
+import com.cyb.generation.common.Constant;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,8 +19,8 @@ public class SqlTypeUtil {
 		javaTypeMap.put("bit", "boolean");
 		javaTypeMap.put("blob", "byte[]");
 		javaTypeMap.put("char", "String");
-		javaTypeMap.put("date", "Date");
-		javaTypeMap.put("datetime", "Date");
+		javaTypeMap.put("date", Constant.LOCAL_DATE);
+		javaTypeMap.put("datetime", Constant.LOCAL_DATE_TIME);
 		javaTypeMap.put("decimal", "BigDecimal");
 		javaTypeMap.put("double", "double");
 		javaTypeMap.put("float", "float");
@@ -30,13 +32,13 @@ public class SqlTypeUtil {
 		javaTypeMap.put("numeric", "BigDecimal");
 		javaTypeMap.put("nvarchar", "String");
 		javaTypeMap.put("real", "float");
-		javaTypeMap.put("smalldatetime", "Date");
+		javaTypeMap.put("smalldatetime", Constant.LOCAL_DATE);
 		javaTypeMap.put("smallint", "int");
 		javaTypeMap.put("smallmoney", "BigDecimal");
 		javaTypeMap.put("sql_variant", "String");
 		javaTypeMap.put("text", "String");
 		javaTypeMap.put("tinyint", "byte");
-		javaTypeMap.put("timestamp", "Date");
+		javaTypeMap.put("timestamp", Constant.LOCAL_DATE_TIME);
 		javaTypeMap.put("uniqueidentifier", "String");
 		javaTypeMap.put("varbinary", "byte[]");
 		javaTypeMap.put("varchar", "String");
@@ -66,7 +68,7 @@ public class SqlTypeUtil {
 		javaBoxTypeMap.put("sql_variant", "String");
 		javaBoxTypeMap.put("text", "String");
 		javaBoxTypeMap.put("tinyint", "Integer");
-		javaBoxTypeMap.put("timestamp", "LocalDateTime");
+		javaBoxTypeMap.put("timestamp", Constant.LOCAL_DATE_TIME);
 		javaBoxTypeMap.put("uniqueidentifier", "String");
 		javaBoxTypeMap.put("varbinary", "Byte[]");
 		javaBoxTypeMap.put("varchar", "String");
