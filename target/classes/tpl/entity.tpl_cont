@@ -4,8 +4,12 @@ package ${context.packageName}.${param.entityPackageName};
 import java.io.Serializable;
 #end
 
-#if(${table.hasDateField})
-import java.util.Date;
+#if(${table.hasLocalDateField})
+import java.time.LocalDate;
+#end
+
+#if(${table.hasLocalDateTimeField})
+import java.time.LocalDateTime;
 #end
 
 #if(${table.hasBigDecimalField})

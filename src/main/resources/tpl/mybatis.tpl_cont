@@ -179,7 +179,7 @@
 #{${column.javaFieldName}},
 #else
             <if test="${column.javaFieldName} != null" >
-            #{${column.javaFieldName}},
+                #{${column.javaFieldName}},
             </if>
 #end
 #end
@@ -241,7 +241,7 @@
             ${column.columnName}=#{${column.javaFieldName}},
 #else
             <if test="${column.javaFieldName} != null" >
-            ${column.columnName}=#{${column.javaFieldName}},
+                ${column.columnName}=#{${column.javaFieldName}},
             </if>
 #end
 #end
@@ -263,7 +263,7 @@
             ${column.columnName}=${column.mybatisUpdateValuePrefix},
 #else
             <if test="entity.${column.javaFieldName} != null or query.forceUpdate" >
-            ${column.columnName}=${column.mybatisUpdateValuePrefix},
+                ${column.columnName}=${column.mybatisUpdateValuePrefix},
             </if>
 #end
 #end
@@ -297,5 +297,23 @@
     <delete id="deleteByQuery" parameterType="com.gitee.fastmybatis.core.query.Query">
         DELETE FROM ${table.tableName} <include refid="common.where" />
     </delete>
+
+    <!-- 根据条件删除记录 -->
+        <delete id="delete" parameterType="${context.packageName}.${param.entityPackageName}.${context.javaBeanName}${context.entitySuffix}">
+            DELETE FROM ${table.tableName}
+            <where>
+#foreach($column in $columns)
+#if(!${column.isPk})
+#if(${column.hasTypeHandlerUpdate})
+                ${column.columnName}=#{${column.javaFieldName}},
+#else
+                <if test="${column.javaFieldName} != null" >
+                    and ${column.columnName}=#{${column.javaFieldName}}
+                </if>
+#end
+#end
+#end
+            </where>
+        </delete>
 
 </mapper>

@@ -21,7 +21,7 @@
     <sql id="baseColumnsList">
         <choose>
             <when test="query.distinct">DISTINCT(t.${pk.columnName})</when>
-            <otherwise>t.${pk.columnName}</otherwise>
+            <otherwise>t.${pk.columnName},</otherwise>
         </choose>
         ${baseColumnsListExcludePK}
     </sql>
@@ -140,7 +140,6 @@
             </selectKey>
 #end
         INSERT INTO ${table.tableName}
-        COLUMN
              (${baseColumns})
         VALUES
             (${valuesColumns})
@@ -180,7 +179,7 @@
 #{${column.javaFieldName}},
 #else
             <if test="${column.javaFieldName} != null" >
-            #{${column.javaFieldName}},
+                #{${column.javaFieldName}},
             </if>
 #end
 #end
@@ -191,31 +190,28 @@
     <!-- 批量保存,保存全部字段 -->
     <insert id="saveBatch">
         INSERT INTO ${table.tableName}
-        COLUMN
             (${baseColumns})
         VALUES
             <foreach collection="entitys" item="entity"  separator=",">
-                (${valuesColumns})
+                (${valuesColumnsBatch})
             </foreach>
     </insert>
 
     <!-- 批量保存(兼容),保存全部字段 -->
     <insert id="saveMulti">
         INSERT INTO ${table.tableName}
-        COLUMN
             (${baseColumns})
         <foreach collection="entitys" item="entity"  separator="UNION ALL">
-            SELECT  ${valuesColumns}
+            SELECT  ${valuesColumnsBatch}
         </foreach>
     </insert>
 
     <!-- 批量保存(兼容),保存全部字段,忽略重复行 -->
     <insert id="saveMultiSet">
         INSERT INTO ${table.tableName}
-        COLUMN
             (${baseColumns})
         <foreach collection="entitys" item="entity"  separator="UNION">
-            SELECT  ${valuesColumns}
+            SELECT  ${valuesColumnsBatch}
         </foreach>
     </insert>
 
@@ -245,7 +241,7 @@
             ${column.columnName}=#{${column.javaFieldName}},
 #else
             <if test="${column.javaFieldName} != null" >
-            ${column.columnName}=#{${column.javaFieldName}},
+                ${column.columnName}=#{${column.javaFieldName}},
             </if>
 #end
 #end
@@ -267,7 +263,7 @@
             ${column.columnName}=${column.mybatisUpdateValuePrefix},
 #else
             <if test="entity.${column.javaFieldName} != null or query.forceUpdate" >
-            ${column.columnName}=${column.mybatisUpdateValuePrefix},
+                ${column.columnName}=${column.mybatisUpdateValuePrefix},
             </if>
 #end
 #end
@@ -301,5 +297,23 @@
     <delete id="deleteByQuery" parameterType="com.gitee.fastmybatis.core.query.Query">
         DELETE FROM ${table.tableName} <include refid="common.where" />
     </delete>
+
+    <!-- 根据条件删除记录 -->
+        <delete id="delete" parameterType="${context.packageName}.${param.entityPackageName}.${context.javaBeanName}${context.entitySuffix}">
+            DELETE FROM ${table.tableName}
+            <where>
+#foreach($column in $columns)
+#if(!${column.isPk})
+#if(${column.hasTypeHandlerUpdate})
+                ${column.columnName}=#{${column.javaFieldName}},
+#else
+                <if test="${column.javaFieldName} != null" >
+                    and ${column.columnName}=#{${column.javaFieldName}}
+                </if>
+#end
+#end
+#end
+            </where>
+        </delete>
 
 </mapper>
