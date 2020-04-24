@@ -54,6 +54,7 @@ public class ${context.javaBeanName}${context.entitySuffix}
 
 #foreach($column in $columns)
     #if(${column.isPk})
+
     	@Id
     	@Column(name="${column.columnName}")
         #if(${column.isIdentity})

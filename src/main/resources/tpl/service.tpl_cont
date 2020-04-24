@@ -1,0 +1,54 @@
+package ${context.packageName}.${param.servicePackageName};
+
+import ${context.packageName}.${param.entityPackageName}.${context.javaBeanName}${context.entitySuffix};
+import java.util.List;
+
+/**
+ * ${context.javaBeanName}服务层
+ *
+ * @author ${param.author}
+ */
+public interface ${context.javaBeanName}${param.serviceClassSuffix} {
+
+    /**
+     * 新增
+     * @param record
+     * @return
+     */
+    int save(${context.javaBeanName} record);
+
+    /**
+     * 删除
+     * @param record
+     * @return
+     */
+    int delete(${context.javaBeanName} record);
+
+    /**
+     * 根据ID删除
+     * @param id
+     * @return
+     */
+    int deleteById(String id);
+
+    /**
+     * 更新
+     * @param record
+     * @return
+     */
+    int update(${context.javaBeanName} record);
+
+    /**
+     * 详情查询
+     * @param id
+     * @return
+     */
+    TUser detail(String id);
+
+    /**
+     * 列表查询
+     * @param record
+     * @return
+     */
+    List<TUser> list(${context.javaBeanName} record);
+}

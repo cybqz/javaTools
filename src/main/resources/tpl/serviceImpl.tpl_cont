@@ -1,0 +1,77 @@
+package ${context.packageName}.${param.servicePackageName}.impl;
+
+import ${context.packageName}.${param.servicePackageName}.${context.javaBeanName}${param.serviceClassSuffix};
+import ${context.packageName}.${param.entityPackageName}.${context.javaBeanName}${context.entitySuffix};
+import ${context.packageName}.${param.mapperPackageName}.${context.javaBeanName}${param.mapperClassSuffix};
+import com.gitee.fastmybatis.core.query.Query;
+import org.springframework.stereotype.Service;
+import javax.annotation.Resource;
+import java.util.List;
+
+@Service("${context.javaBeanNameLF}${param.serviceClassSuffix}")
+public class ${context.javaBeanName}${param.serviceImplClassSuffix} implements ${context.javaBeanName}${param.serviceClassSuffix} {
+
+    @Resource
+    private ${context.javaBeanName}${param.mapperClassSuffix} ${context.javaBeanNameLF}${param.mapperClassSuffix};
+
+    /**
+     * 新增
+     * @param record
+     * @return
+     */
+    @Override
+    public int save(${context.javaBeanName}${context.entitySuffix} record) {
+        return ${context.javaBeanNameLF}${param.mapperClassSuffix}.save(record);
+    }
+
+    /**
+     * 删除
+     * @param record
+     * @return
+     */
+    @Override
+    public int delete(${context.javaBeanName}${context.entitySuffix} record) {
+        return ${context.javaBeanNameLF}${param.mapperClassSuffix}.delete(record);
+    }
+
+    /**
+     * 根据ID删除
+     * @param id
+     * @return
+     */
+    @Override
+    public int deleteById(String id) {
+        return ${context.javaBeanNameLF}${param.mapperClassSuffix}.deleteById(id);
+    }
+
+    /**
+     * 更新
+     * @param record
+     * @return
+     */
+    @Override
+    public int update(${context.javaBeanName}${context.entitySuffix} record) {
+        return ${context.javaBeanNameLF}${param.mapperClassSuffix}.update(record);
+    }
+
+    /**
+     * 详情查询
+     * @param id
+     * @return
+     */
+    @Override
+    public TUser detail(String id) {
+        return ${context.javaBeanNameLF}${param.mapperClassSuffix}.getById(id);
+    }
+
+    /**
+     * 列表查询
+     * @param record
+     * @return
+     */
+    @Override
+    public List<TUser> list(${context.javaBeanName}${context.entitySuffix} record) {
+        Query query = new Query();
+        return ${context.javaBeanNameLF}${param.mapperClassSuffix}.list(query);
+    }
+}

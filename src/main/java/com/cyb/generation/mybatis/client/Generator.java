@@ -27,16 +27,20 @@ public class Generator {
 	public void generateCode() {
 
 		SQLContext sqlContext = this.buildClientSQLContextList();
+		FormatUtil formatUtil = new FormatUtil();
 
 		List<String> tplList = new ArrayList<>();
-		tplList.add("mapper.tpl");
-		tplList.add("mybatis.tpl");
 		if(this.clientParam.isLombok()){
 
 			tplList.add("entity_lombok.tpl");
 		}else{
 			tplList.add("entity.tpl");
 		}
+		tplList.add("mybatis.tpl");
+		tplList.add("mapper.tpl");
+		tplList.add("service.tpl");
+		tplList.add("serviceImpl.tpl");
+		tplList.add("controller.tpl");
 
 		System.out.println(this.clientParam.isLombok()?"\t使用Lombok":"\t未使用Lombok");
 
@@ -54,7 +58,7 @@ public class Generator {
 			String fileName = doGenerator(sqlContext, template.getFileName());
 			String savePath = doGenerator(sqlContext, template.getSavePath());
 
-			content = this.formatCode(fileName, content);
+			content = formatUtil.formatCode(fileName, content);
 
 			if(fileName.indexOf(".java") > -1){
 
@@ -248,16 +252,5 @@ public class Generator {
 			extClass = overrideExtClass;
 		}
 		context.put("extClass", extClass);
-	}
-
-	// 格式化代码
-	private String formatCode(String fileName, String content) {
-		if (fileName.endsWith(".xml")) {
-			//return FormatUtil.formatXml(content);
-		}
-        if(fileName.toLowerCase().endsWith(".java")) {
-            return FormatUtil.formatJava(content);
-        }
-		return content;
 	}
 }

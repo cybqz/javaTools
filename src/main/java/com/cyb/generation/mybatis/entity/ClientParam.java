@@ -15,6 +15,7 @@ public class ClientParam {
 
 	private String basePath;
 	private String packageName;
+	private String controllerPackageName;
 	private String charset = "UTF-8";
 
 	private String dbName;

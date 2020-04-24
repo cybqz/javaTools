@@ -1,0 +1,89 @@
+package ${context.packageName}.${param.controllerPackageName};
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import ${context.packageName}.${param.servicePackageName}.${context.javaBeanName}${param.serviceClassSuffix};
+import ${context.packageName}.${param.entityPackageName}.${context.javaBeanName}${context.entitySuffix};
+import java.util.List;
+
+/**
+ * ${context.javaBeanName}控制层
+ *
+ * @author ${param.author}
+ */
+@Controller
+@CrossOrigin
+@RequestMapping("${context.javaBeanNameLowerCase}")
+public class ${context.javaBeanName}${param.controllerClassSuffix}
+#if("$!{extClass}" != "")
+	extends $extClass
+#end
+
+#foreach($implClass in $impls)
+	#if($velocityCount == 1) implements #end
+	#if($velocityCount > 1),#end
+	$implClass
+#end
+{
+
+    @Autowired
+    private ${context.javaBeanName}${param.serviceClassSuffix} ${context.javaBeanNameLF}${param.serviceClassSuffix};
+
+
+    /**
+     * 新增
+     * @param ${context.javaBeanNameLF}
+     * @return
+     */
+    @ResponseBody
+    @PostMapping("save")
+    public int save(@RequestBody ${context.javaBeanName} ${context.javaBeanNameLF}) {
+        return ${context.javaBeanNameLF}${param.serviceClassSuffix}.save(${context.javaBeanNameLF});
+    }
+
+
+    /**
+     * 根据ID删除
+     * @param id
+     * @return
+     */
+    @ResponseBody
+    @PostMapping("deleteById")
+    public int deleteById(@RequestParam(value = "id", required = true) String id) {
+        return ${context.javaBeanNameLF}${param.serviceClassSuffix}.deleteById(id);
+    }
+
+    /**
+     * 更新
+     * @param ${context.javaBeanNameLF}
+     * @return
+     */
+    @ResponseBody
+    @PostMapping("update")
+    public int update(@RequestBody ${context.javaBeanName} ${context.javaBeanNameLF}) {
+        return ${context.javaBeanNameLF}${param.serviceClassSuffix}.update(${context.javaBeanNameLF});
+    }
+
+    /**
+     * 详情查询
+     * @param id
+     * @return
+     */
+    @ResponseBody
+    @PostMapping("detail")
+    public ${context.javaBeanName} detail(@RequestParam(value = "id", required = true) String id) {
+        return ${context.javaBeanNameLF}${param.serviceClassSuffix}.detail(id);
+    }
+
+    /**
+     * 列表查询
+     * @param ${context.javaBeanNameLF}
+     * @return
+     */
+    @ResponseBody
+    @PostMapping("list")
+    public List<${context.javaBeanName}> list(@RequestBody(required = false) ${context.javaBeanName} ${context.javaBeanNameLF}) {
+        return ${context.javaBeanNameLF}${param.serviceClassSuffix}.list(${context.javaBeanNameLF});
+    }
+}

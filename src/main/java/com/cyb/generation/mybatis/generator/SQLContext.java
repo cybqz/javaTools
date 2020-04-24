@@ -43,6 +43,16 @@ public class SQLContext {
     }
 
     /**
+     * 返回全小写Java类名
+     *
+     * @return
+     */
+    public String getJavaBeanNameLowerCase() {
+
+        return this.tableDefinition.getJavaBeanName().toLowerCase();
+    }
+
+    /**
      * 返回Java类名且首字母小写
      * 
      * @return

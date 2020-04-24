@@ -14,24 +14,33 @@ import java.io.StringWriter;
  * @author tanghc
  */
 public class FormatUtil {
+
+    public String formatCode(String fileName, String content) {
+        if (fileName.endsWith(".xml")) {
+            return formatXml(content, fileName);
+        }
+        if(fileName.toLowerCase().endsWith(".java")) {
+            return formatJava(content, fileName);
+        }
+        return content;
+    }
     
-    public static String formatJava(String input) {
+    private String formatJava(String input, String path) {
         try {
             StringBuffer output = new StringBuffer();
             Jalopy j = new Jalopy();
             j.setEncoding("UTF-8");
-            j.setInput(input, "A.java");
+            j.setInput(input, path);
             j.setOutput(output);
             j.format();
             return output.toString();
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println(input);
             return input;
         }
     }
 
-    public static String formatXml(String input) {
+    private String formatXml(String input, String path) {
         try{
             SAXReader reader = new SAXReader();
             // System.out.println(reader);
@@ -61,7 +70,4 @@ public class FormatUtil {
             return input;
         }
     }
-    
-    
-    
 }
