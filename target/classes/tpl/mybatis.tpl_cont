@@ -263,7 +263,7 @@
             ${column.columnName}=${column.mybatisUpdateValuePrefix},
 #else
             <if test="entity.${column.javaFieldName} != null or query.forceUpdate" >
-                ${column.columnName}=${column.mybatisUpdateValuePrefix},
+                ${column.columnName}=#{entity.${column.javaFieldName}},
             </if>
 #end
 #end
@@ -299,21 +299,21 @@
     </delete>
 
     <!-- 根据条件删除记录 -->
-        <delete id="delete" parameterType="${context.packageName}.${param.entityPackageName}.${context.javaBeanName}${context.entitySuffix}">
-            DELETE FROM ${table.tableName}
-            <where>
+    <delete id="delete" parameterType="${context.packageName}.${param.entityPackageName}.${context.javaBeanName}${context.entitySuffix}">
+        DELETE FROM ${table.tableName}
+        <where>
 #foreach($column in $columns)
 #if(!${column.isPk})
 #if(${column.hasTypeHandlerUpdate})
-                ${column.columnName}=#{${column.javaFieldName}},
+            ${column.columnName}=#{${column.javaFieldName}},
 #else
-                <if test="${column.javaFieldName} != null" >
-                    and ${column.columnName}=#{${column.javaFieldName}}
-                </if>
+            <if test="${column.javaFieldName} != null" >
+                and ${column.columnName}=#{${column.javaFieldName}}
+            </if>
 #end
 #end
 #end
-            </where>
-        </delete>
+        </where>
+    </delete>
 
 </mapper>
