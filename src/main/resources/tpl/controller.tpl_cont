@@ -71,7 +71,7 @@ public class ${context.javaBeanName}${param.controllerClassSuffix}
      * @return
      */
     @ResponseBody
-    @PostMapping("detail")
+    @GetMapping("detail")
     public ${context.javaBeanName} detail(@RequestParam(value = "id", required = true) String id) {
         return ${context.javaBeanNameLF}${param.serviceClassSuffix}.detail(id);
     }
@@ -82,7 +82,7 @@ public class ${context.javaBeanName}${param.controllerClassSuffix}
      * @return
      */
     @ResponseBody
-    @PostMapping("list")
+    @GetMapping("list")
     public List<${context.javaBeanName}> list(@RequestBody(required = false) ${context.javaBeanName} ${context.javaBeanNameLF}) {
         return ${context.javaBeanNameLF}${param.serviceClassSuffix}.list(${context.javaBeanNameLF});
     }
