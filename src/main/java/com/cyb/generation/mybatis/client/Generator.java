@@ -8,6 +8,7 @@ import com.cyb.generation.mybatis.generator.*;
 import com.cyb.generation.util.FileUtil;
 import com.cyb.generation.util.FormatUtil;
 import com.cyb.generation.util.VelocityUtil;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.velocity.VelocityContext;
 import org.springframework.util.StringUtils;
 
@@ -26,9 +27,13 @@ public class Generator {
 
 	public void generateCode() {
 
-		SQLContext sqlContext = this.buildClientSQLContextList();
-		FormatUtil formatUtil = new FormatUtil();
+		List<SQLContext> sqlContextList = this.buildClientSQLContextList();
+		if(CollectionUtils.isEmpty(sqlContextList)){
+			System.out.println("没有需要生成的表");
+			return;
+		}
 
+		FormatUtil formatUtil = new FormatUtil();
 		List<String> tplList = new ArrayList<>();
 		if(this.clientParam.isLombok()){
 
@@ -43,6 +48,13 @@ public class Generator {
 		tplList.add("controller.tpl");
 
 		System.out.println(this.clientParam.isLombok()?"\t使用Lombok":"\t未使用Lombok");
+
+		for(SQLContext context : sqlContextList){
+			executeGeneration(context, formatUtil, tplList);
+		}
+	}
+
+	private void executeGeneration(SQLContext sqlContext, FormatUtil formatUtil, List<String> tplList){
 
 		setPackageName(sqlContext, clientParam.getPackageName());
 
@@ -67,16 +79,11 @@ public class Generator {
 
 				dest = this.dest + "resources/";
 			}
-
 			String saveDir = dest + File.separator + savePath;
-
 			FileUtil.createFolder(saveDir);
-
 			String filePathName = saveDir + File.separator +fileName;
-
 			FileUtil.write(content, filePathName, clientParam.getCharset());
 		}
-
 	}
 
 	private TplInfo buildTempObj(String tplFile) {
@@ -111,7 +118,7 @@ public class Generator {
 	 *
 	 * @return
 	 */
-	private SQLContext buildClientSQLContextList() {
+	private List<SQLContext> buildClientSQLContextList() {
 
 		DataBaseConfig dataBaseConfig = this.clientParam.buildDataBaseConfig();
 		List<String> excludeTableList = this.clientParam.getExcludeTableList();
@@ -119,23 +126,23 @@ public class Generator {
 		SQLService service = SQLServiceFactory.build(dataBaseConfig);
 		TableSelector tableSelector = service.getTableSelector(dataBaseConfig);
 
-		List<TableDefinition> tableDefinitions = tableSelector.getTableDefinitions();
-		for (TableDefinition td : tableDefinitions) {
-			for(String excludeTable : excludeTableList){
-				if(excludeTable.equals(td.getTableName())){
-					System.out.println(excludeTable + "\t已排除");
-					continue;
-				}
+		List<SQLContext> sqlContextList = new ArrayList<SQLContext>();
+		List<TableDefinition> list = tableSelector.getTableDefinitions();
+		for (TableDefinition td : list) {
+
+			if(CollectionUtils.isNotEmpty(excludeTableList) && excludeTableList.contains(td.getTableName())){
+				System.out.println(td.getTableName() + "\t已排除");
+				continue;
 			}
 			if(td.getPkColumn() == null) {
 				System.err.println("表" + td.getTableName() + "没有设置主键");
 			}
+
+			SQLContext context = new SQLContext(td);
+			context.setParam(this.clientParam.getParam());
+			sqlContextList.add(context);
 		}
-
-		SQLContext context = new SQLContext(tableDefinitions.get(0));
-		context.setParam(this.clientParam.getParam());
-
-		return context;
+		return sqlContextList;
 	}
 	
 	private void setPackageName(SQLContext sqlContext, String packageName) {
