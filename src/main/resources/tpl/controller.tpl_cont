@@ -113,7 +113,7 @@ public class ${context.javaBeanName}${param.controllerClassSuffix}  extends Base
      */
     @ResponseBody
     @GetMapping("/list")
-    public Tips list(@RequestBody(required = false) ${context.javaBeanName} ${context.javaBeanNameLF}) {
+    public Tips list(${context.javaBeanName} ${context.javaBeanNameLF}) {
         super.validLogined();
         if(isLogined){
             List<${context.javaBeanName}> list = ${context.javaBeanNameLF}${param.serviceClassSuffix}.list(${context.javaBeanNameLF});
