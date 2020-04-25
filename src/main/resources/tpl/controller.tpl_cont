@@ -1,8 +1,11 @@
 package ${context.packageName}.${param.controllerPackageName};
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import com.cyb.authority.base.BaseController;
+import com.cyb.common.tips.Tips;
 import ${context.packageName}.${param.servicePackageName}.${context.javaBeanName}${param.serviceClassSuffix};
 import ${context.packageName}.${param.entityPackageName}.${context.javaBeanName}${context.entitySuffix};
 import java.util.List;
@@ -14,8 +17,8 @@ import java.util.List;
  */
 @Controller
 @CrossOrigin
-@RequestMapping("${context.javaBeanNameLowerCase}")
-public class ${context.javaBeanName}${param.controllerClassSuffix}
+@RequestMapping("/${context.javaBeanNameLowerCase}")
+public class ${context.javaBeanName}${param.controllerClassSuffix}  extends BaseController
 #if("$!{extClass}" != "")
 	extends $extClass
 #end
@@ -37,9 +40,16 @@ public class ${context.javaBeanName}${param.controllerClassSuffix}
      * @return
      */
     @ResponseBody
-    @PostMapping("save")
-    public int save(@RequestBody ${context.javaBeanName} ${context.javaBeanNameLF}) {
-        return ${context.javaBeanNameLF}${param.serviceClassSuffix}.save(${context.javaBeanNameLF});
+    @PostMapping("/save")
+    public Tips save(${context.javaBeanName} ${context.javaBeanNameLF}) {
+        super.validLogined();
+        if(isLogined){
+            int count = ${context.javaBeanNameLF}${param.serviceClassSuffix}.save(${context.javaBeanNameLF});
+            if(count > 0){
+                tips.setMsg("保存成功");
+            }
+        }
+        return tips;
     }
 
 
@@ -49,9 +59,16 @@ public class ${context.javaBeanName}${param.controllerClassSuffix}
      * @return
      */
     @ResponseBody
-    @PostMapping("deleteById")
-    public int deleteById(@RequestParam(value = "id", required = true) String id) {
-        return ${context.javaBeanNameLF}${param.serviceClassSuffix}.deleteById(id);
+    @PostMapping("/deleteById")
+    public Tips deleteById(@RequestParam(value = "id", required = true) String id) {
+        super.validLogined();
+        if(isLogined){
+            int count = ${context.javaBeanNameLF}${param.serviceClassSuffix}.deleteById(id);
+            if(count > 0){
+                tips.setMsg("删除成功");
+            }
+        }
+        return tips;
     }
 
     /**
@@ -60,9 +77,16 @@ public class ${context.javaBeanName}${param.controllerClassSuffix}
      * @return
      */
     @ResponseBody
-    @PostMapping("update")
-    public int update(@RequestBody ${context.javaBeanName} ${context.javaBeanNameLF}) {
-        return ${context.javaBeanNameLF}${param.serviceClassSuffix}.update(${context.javaBeanNameLF});
+    @PostMapping("/update")
+    public Tips update(${context.javaBeanName} ${context.javaBeanNameLF}) {
+        super.validLogined();
+        if(isLogined){
+            int count = ${context.javaBeanNameLF}${param.serviceClassSuffix}.update(${context.javaBeanNameLF});
+            if(count > 0){
+                tips.setMsg("更新成功");
+            }
+        }
+        return tips;
     }
 
     /**
@@ -71,9 +95,15 @@ public class ${context.javaBeanName}${param.controllerClassSuffix}
      * @return
      */
     @ResponseBody
-    @GetMapping("detail")
-    public ${context.javaBeanName} detail(@RequestParam(value = "id", required = true) String id) {
-        return ${context.javaBeanNameLF}${param.serviceClassSuffix}.detail(id);
+    @GetMapping("/detail")
+    public Tips detail(@RequestParam(value = "id", required = true) String id) {
+        super.validLogined();
+        if(isLogined){
+            ${context.javaBeanName} ${context.javaBeanNameLF} = ${context.javaBeanNameLF}${param.serviceClassSuffix}.detail(id);
+            tips.setData(${context.javaBeanNameLF});
+            tips.setMsg("查询成功");
+        }
+        return tips;
     }
 
     /**
@@ -82,8 +112,14 @@ public class ${context.javaBeanName}${param.controllerClassSuffix}
      * @return
      */
     @ResponseBody
-    @GetMapping("list")
-    public List<${context.javaBeanName}> list(@RequestBody(required = false) ${context.javaBeanName} ${context.javaBeanNameLF}) {
-        return ${context.javaBeanNameLF}${param.serviceClassSuffix}.list(${context.javaBeanNameLF});
+    @GetMapping("/list")
+    public Tips list(@RequestBody(required = false) ${context.javaBeanName} ${context.javaBeanNameLF}) {
+        super.validLogined();
+        if(isLogined){
+            List<${context.javaBeanName}> list = ${context.javaBeanNameLF}${param.serviceClassSuffix}.list(${context.javaBeanNameLF});
+            tips.setData(list);
+            tips.setMsg("查询成功");
+        }
+        return tips;
     }
 }

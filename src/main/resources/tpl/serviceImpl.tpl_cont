@@ -3,7 +3,7 @@ package ${context.packageName}.${param.servicePackageName}.impl;
 import ${context.packageName}.${param.servicePackageName}.${context.javaBeanName}${param.serviceClassSuffix};
 import ${context.packageName}.${param.entityPackageName}.${context.javaBeanName}${context.entitySuffix};
 import ${context.packageName}.${param.mapperPackageName}.${context.javaBeanName}${param.mapperClassSuffix};
-import com.gitee.fastmybatis.core.query.Query;
+import com.beastmybatis.core.query.Query;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -60,7 +60,7 @@ public class ${context.javaBeanName}${param.serviceImplClassSuffix} implements $
      * @return
      */
     @Override
-    public TUser detail(String id) {
+    public ${context.javaBeanName}${context.entitySuffix} detail(String id) {
         return ${context.javaBeanNameLF}${param.mapperClassSuffix}.getById(id);
     }
 
@@ -70,7 +70,7 @@ public class ${context.javaBeanName}${param.serviceImplClassSuffix} implements $
      * @return
      */
     @Override
-    public List<TUser> list(${context.javaBeanName}${context.entitySuffix} record) {
+    public List<${context.javaBeanName}${context.entitySuffix}> list(${context.javaBeanName}${context.entitySuffix} record) {
         Query query = new Query();
         return ${context.javaBeanNameLF}${param.mapperClassSuffix}.list(query);
     }

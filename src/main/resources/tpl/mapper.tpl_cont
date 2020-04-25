@@ -1,6 +1,6 @@
 package ${context.packageName}.${param.mapperPackageName};
 
-import com.gitee.fastmybatis.core.mapper.CrudMapper;
+import com.beastmybatis.core.mapper.CrudMapper;
 import ${context.packageName}.${param.entityPackageName}.${context.javaBeanName}${context.entitySuffix};
 
 /**

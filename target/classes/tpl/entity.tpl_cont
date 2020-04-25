@@ -51,6 +51,7 @@ public class ${context.javaBeanName}${context.entitySuffix}
 
 #foreach($column in $columns)
     #if(${column.isPk})
+
     	@Id
     	@Column(name="${column.columnName}")
         #if(${column.isIdentity})
@@ -66,7 +67,7 @@ public class ${context.javaBeanName}${context.entitySuffix}
         #end
     #end
     #if(${column.columnName} == ${param.deleteColumn})
-        @com.gitee.fastmybatis.core.annotation.LogicDelete
+        @com.beastmybatis.core.annotation.LogicDelete
     #end
         /** #if("$!{column.comment}"!="")${column.comment},#end 数据库字段：${column.columnName} */
     	private ${column.javaTypeBox} ${column.javaFieldName}; 

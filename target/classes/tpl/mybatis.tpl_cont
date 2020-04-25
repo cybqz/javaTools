@@ -27,7 +27,7 @@
     </sql>
 
     <!-- 根据条件查询记录 -->
-    <select id="list" parameterType="com.gitee.fastmybatis.core.query.Query" resultMap="baseResultMap">
+    <select id="list" parameterType="com.beastmybatis.core.query.Query" resultMap="baseResultMap">
         SELECT
             <include refid="baseColumnsList" />
         FROM ${table.tableName} t
@@ -62,7 +62,7 @@
     </select>
 
     <!-- 根据条件查询记录数 -->
-    <select id="getCount" parameterType="com.gitee.fastmybatis.core.query.Query" resultType="long">
+    <select id="getCount" parameterType="com.beastmybatis.core.query.Query" resultType="long">
         SELECT count(*) FROM ${table.tableName} t
         <include refid="common.join" />
         <where>
@@ -88,7 +88,7 @@
     </select>
 
     <!-- 根据条件获取单条记录 -->
-    <select id="getByQuery" resultMap="baseResultMap" parameterType="com.gitee.fastmybatis.core.query.Query">
+    <select id="getByQuery" resultMap="baseResultMap" parameterType="com.beastmybatis.core.query.Query">
         SELECT
             <include refid="baseColumns" />
         FROM ${table.tableName} t
@@ -294,7 +294,7 @@
     </delete>
 
     <!-- 根据条件删除记录 -->
-    <delete id="deleteByQuery" parameterType="com.gitee.fastmybatis.core.query.Query">
+    <delete id="deleteByQuery" parameterType="com.beastmybatis.core.query.Query">
         DELETE FROM ${table.tableName} <include refid="common.where" />
     </delete>
 
