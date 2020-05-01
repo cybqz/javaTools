@@ -65,6 +65,17 @@ public class ${context.javaBeanName}${param.serviceImplClassSuffix} implements $
     }
 
     /**
+     * 单条查询
+     * @param record
+     * @return
+     */
+    @Override
+    public ${context.javaBeanName}${context.entitySuffix} getOne(${context.javaBeanName}${context.entitySuffix} record) {
+        Query query = new Query();
+        return ${context.javaBeanNameLF}${param.mapperClassSuffix}.getByQuery(query);
+    }
+
+    /**
      * 列表查询
      * @param record
      * @return

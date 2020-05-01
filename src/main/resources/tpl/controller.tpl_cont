@@ -60,7 +60,7 @@ public class ${context.javaBeanName}${param.controllerClassSuffix}  extends Base
      */
     @ResponseBody
     @PostMapping("/deleteById")
-    public Tips deleteById(@RequestParam(value = "id", required = true) String id) {
+    public Tips deleteById(@RequestParam(value = "id") String id) {
         super.validLogined();
         if(isLogined){
             int count = ${context.javaBeanNameLF}${param.serviceClassSuffix}.deleteById(id);
@@ -96,7 +96,7 @@ public class ${context.javaBeanName}${param.controllerClassSuffix}  extends Base
      */
     @ResponseBody
     @GetMapping("/detail")
-    public Tips detail(@RequestParam(value = "id", required = true) String id) {
+    public Tips detail(@RequestParam(value = "id") String id) {
         super.validLogined();
         if(isLogined){
             ${context.javaBeanName} ${context.javaBeanNameLF} = ${context.javaBeanNameLF}${param.serviceClassSuffix}.detail(id);

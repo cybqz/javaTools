@@ -46,6 +46,13 @@ public interface ${context.javaBeanName}${param.serviceClassSuffix} {
     ${context.javaBeanName} detail(String id);
 
     /**
+     * 单条查询
+     * @param record
+     * @return
+     */
+    ${context.javaBeanName} getOne(${context.javaBeanName} record);
+
+    /**
      * 列表查询
      * @param record
      * @return
