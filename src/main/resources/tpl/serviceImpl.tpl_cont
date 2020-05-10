@@ -4,6 +4,8 @@ import ${context.packageName}.${param.servicePackageName}.${context.javaBeanName
 import ${context.packageName}.${param.entityPackageName}.${context.javaBeanName}${context.entitySuffix};
 import ${context.packageName}.${param.mapperPackageName}.${context.javaBeanName}${param.mapperClassSuffix};
 import com.beastmybatis.core.query.Query;
+import com.cyb.common.pagination.Pagination;
+import com.beastmybatis.core.util.MapperUtil;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -84,5 +86,21 @@ public class ${context.javaBeanName}${param.serviceImplClassSuffix} implements $
     public List<${context.javaBeanName}${context.entitySuffix}> list(${context.javaBeanName}${context.entitySuffix} record) {
         Query query = new Query();
         return ${context.javaBeanNameLF}${param.mapperClassSuffix}.list(query);
+    }
+
+    /**
+     * 分页列表查询
+     * @param record
+     * @param pagination
+     * @return
+     */
+    @Override
+    public Pagination<${context.javaBeanName}${context.entitySuffix}> page(${context.javaBeanName}${context.entitySuffix} record, Pagination pagination) {
+        Query query = new Query();
+        query.setQueryAll(false);
+        query.page(pagination.getPageIndex(), pagination.getLimit());
+
+        Pagination<${context.javaBeanName}${context.entitySuffix}> result = MapperUtil.query(${context.javaBeanNameLF}${param.mapperClassSuffix}, query);
+        return result;
     }
 }

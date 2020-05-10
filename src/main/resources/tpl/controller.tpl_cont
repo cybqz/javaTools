@@ -1,10 +1,11 @@
 package ${context.packageName}.${param.controllerPackageName};
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import com.cyb.authority.base.BaseController;
+import com.cyb.common.pagination.Pagination;
+import com.cyb.common.tips.TipsPagination;
 import com.cyb.common.tips.Tips;
 import ${context.packageName}.${param.servicePackageName}.${context.javaBeanName}${param.serviceClassSuffix};
 import ${context.packageName}.${param.entityPackageName}.${context.javaBeanName}${context.entitySuffix};
@@ -121,5 +122,26 @@ public class ${context.javaBeanName}${param.controllerClassSuffix}  extends Base
             tips.setMsg("查询成功");
         }
         return tips;
+    }
+
+    /**
+     * 分页列表查询
+     * @param ${context.javaBeanNameLF}
+     * @param pagination
+     * @return
+     */
+    @ResponseBody
+    @GetMapping("/page")
+    public TipsPagination<${context.javaBeanName}> page(${context.javaBeanName} ${context.javaBeanNameLF}, Pagination pagination) {
+
+        TipsPagination<${context.javaBeanName}> tipsPagination = new TipsPagination<${context.javaBeanName}>();
+        super.validLogined();
+        tipsPagination.convertFromTips(tips);
+        if (isLogined) {
+
+            tipsPagination.setPagination(null);
+            tipsPagination.setMsg("查询成功");
+        }
+        return tipsPagination;
     }
 }

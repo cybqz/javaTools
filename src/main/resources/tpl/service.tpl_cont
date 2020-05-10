@@ -1,5 +1,6 @@
 package ${context.packageName}.${param.servicePackageName};
 
+import com.cyb.common.pagination.Pagination;
 import ${context.packageName}.${param.entityPackageName}.${context.javaBeanName}${context.entitySuffix};
 import java.util.List;
 
@@ -58,4 +59,12 @@ public interface ${context.javaBeanName}${param.serviceClassSuffix} {
      * @return
      */
     List<${context.javaBeanName}> list(${context.javaBeanName} record);
+
+    /**
+     * 分页列表查询
+     * @param record
+     * @param pagination
+     * @return
+     */
+    Pagination<${context.javaBeanName}> page(${context.javaBeanName} record, Pagination pagination);
 }
