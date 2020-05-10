@@ -138,8 +138,8 @@ public class ${context.javaBeanName}${param.controllerClassSuffix}  extends Base
         super.validLogined();
         tipsPagination.convertFromTips(tips);
         if (isLogined) {
-
-            tipsPagination.setPagination(null);
+            Pagination<${context.javaBeanName}> result = ${context.javaBeanNameLF}${param.serviceClassSuffix}.page(${context.javaBeanNameLF}, pagination);
+            tipsPagination.setPagination(result);
             tipsPagination.setMsg("查询成功");
         }
         return tipsPagination;

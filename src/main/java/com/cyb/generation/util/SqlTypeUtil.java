@@ -42,6 +42,7 @@ public class SqlTypeUtil {
 		javaTypeMap.put("uniqueidentifier", "String");
 		javaTypeMap.put("varbinary", "byte[]");
 		javaTypeMap.put("varchar", "String");
+		javaTypeMap.put("json", "String");
 		
 		
 		javaBoxTypeMap.put("bigint", "Long");
@@ -72,6 +73,7 @@ public class SqlTypeUtil {
 		javaBoxTypeMap.put("uniqueidentifier", "String");
 		javaBoxTypeMap.put("varbinary", "Byte[]");
 		javaBoxTypeMap.put("varchar", "String");
+		javaBoxTypeMap.put("json", "String");
 		
 		// oracle
 		javaBoxTypeMap.put("varchar2", "String");
@@ -104,6 +106,7 @@ public class SqlTypeUtil {
 		mybatisTypeMap.put("timestamp", "TIMESTAMP");
 		mybatisTypeMap.put("uniqueidentifier", "VARCHAR");
 		mybatisTypeMap.put("varbinary", "BLOB");
+		mybatisTypeMap.put("json", "VARCHAR");
 		mybatisTypeMap.put("varchar", "VARCHAR");
 		mybatisTypeMap.put("varchar2", "VARCHAR");
 	}
