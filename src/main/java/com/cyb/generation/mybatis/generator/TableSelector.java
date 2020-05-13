@@ -29,20 +29,6 @@ public abstract class TableSelector {
 	
 	protected abstract TableDefinition buildTableDefinition(Map<String, Object> tableMap);
 	
-	public List<TableDefinition> getAllTableDefinitions() {
-		List<Map<String, Object>> resultList = SqlHelper.runSql(getDataBaseConfig(), getAllTablesSQL(dataBaseConfig.getDbName()));
-		List<TableDefinition> tablesList = new ArrayList<TableDefinition>(resultList.size());
-		
-		for (Map<String, Object> rowMap : resultList) {
-			TableDefinition tableDefinition = this.buildTableDefinition(rowMap);
-			tableDefinition.setDataBaseConfig(dataBaseConfig);
-			tableDefinition.setColumnDefinitions(columnSelector.getColumnDefinitions(tableDefinition.getTableName()));
-			tablesList.add(tableDefinition);
-		}
-		
-		return tablesList;
-	}
-	
 	public List<TableDefinition> getTableDefinitions() {
 		List<Map<String, Object>> resultList = SqlHelper.runSql(getDataBaseConfig(), getShowTablesSQL(dataBaseConfig.getDbName()));
 		List<TableDefinition> tablesList = new ArrayList<TableDefinition>(resultList.size());
@@ -54,22 +40,9 @@ public abstract class TableSelector {
 			tableDefinition.setUuid(dataBaseConfig.isUuid());
 			tablesList.add(tableDefinition);
 		}
-		
 		if(tablesList.isEmpty()) {
 			throw new RuntimeException("查不到表结构数据，检查配置文件是否正确");
 		}
-		
-		return tablesList;
-	}
-	
-	public List<TableDefinition> getSimpleTableDefinitions() {
-		List<Map<String, Object>> resultList = SqlHelper.runSql(getDataBaseConfig(), getShowTablesSQL(dataBaseConfig.getDbName()));
-		List<TableDefinition> tablesList = new ArrayList<TableDefinition>(resultList.size());
-		
-		for (Map<String, Object> rowMap : resultList) {
-			tablesList.add(this.buildTableDefinition(rowMap));
-		}
-		
 		return tablesList;
 	}
 	
@@ -96,5 +69,4 @@ public abstract class TableSelector {
 	public void setSchTableNames(List<String> schTableNames) {
 		this.schTableNames = schTableNames;
 	}
-
 }

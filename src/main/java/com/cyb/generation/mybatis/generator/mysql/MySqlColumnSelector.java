@@ -37,20 +37,15 @@ public class MySqlColumnSelector extends ColumnSelector {
 		}
 		
 		ColumnDefinition columnDefinition = new ColumnDefinition();
-		
 		columnDefinition.setColumnName((String)rowMap.get("FIELD"));
-		
 		boolean isIdentity = "auto_increment".equalsIgnoreCase((String)rowMap.get("EXTRA"));
 		columnDefinition.setIsIdentity(isIdentity);
 		
 		boolean isPk = "PRI".equalsIgnoreCase((String)rowMap.get("KEY"));
 		columnDefinition.setIsPk(isPk);
-		
 		String type = (String)rowMap.get("TYPE");
 		columnDefinition.setType(buildType(type));
-		
 		columnDefinition.setComment((String)rowMap.get("COMMENT"));
-		
 		return columnDefinition;
 	}
 	
@@ -65,5 +60,4 @@ public class MySqlColumnSelector extends ColumnSelector {
 		}
 		return "VARCHAR";
 	}
-	
 }

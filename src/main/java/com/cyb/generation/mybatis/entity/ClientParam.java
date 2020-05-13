@@ -26,9 +26,7 @@ public class ClientParam {
 	private boolean showSchema;
 
 	private boolean lombok = false;
-
 	private boolean uuid;
-	
 	private Map<Object,Object> param = null;
 
 	public DataBaseConfig buildDataBaseConfig() {

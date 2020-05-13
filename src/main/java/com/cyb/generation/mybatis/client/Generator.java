@@ -57,7 +57,6 @@ public class Generator {
 	private void executeGeneration(SQLContext sqlContext, FormatUtil formatUtil, List<String> tplList){
 
 		setPackageName(sqlContext, clientParam.getPackageName());
-
 		FileUtil.createFolder(this.dest);
 
 		for (String tplFile : tplList) {
@@ -137,7 +136,6 @@ public class Generator {
 			if(td.getPkColumn() == null) {
 				System.err.println("表" + td.getTableName() + "没有设置主键");
 			}
-
 			SQLContext context = new SQLContext(td);
 			context.setParam(this.clientParam.getParam());
 			sqlContextList.add(context);
@@ -156,11 +154,8 @@ public class Generator {
 			return "";
 		}
 		VelocityContext context = new VelocityContext();
-		
 		TableDefinition tableDefinition = sqlContext.getTableDefinition();
-
 		List<ColumnDefinition> columnDefinitionList = tableDefinition.getColumnDefinitions();
-		
 		context.put("context", sqlContext);
 		context.put("table", tableDefinition);
 		context.put("param", sqlContext.getParam());
@@ -173,7 +168,6 @@ public class Generator {
 
 		this.putImpls(context, sqlContext);
 		this.putExt(context, sqlContext);
-
 		return VelocityUtil.generate(context, template);
 	}
 
@@ -184,7 +178,6 @@ public class Generator {
 		for(ColumnDefinition columnDefinition : columnDefinitionList){
 			stringBuilder.append(",#{entity.").append(columnDefinition.getJavaFieldName()).append("}");
 		}
-
 		String result = stringBuilder.toString();
 		return result.substring(1, result.length());
 	}
@@ -196,7 +189,6 @@ public class Generator {
 		for(ColumnDefinition columnDefinition : columnDefinitionList){
 			stringBuilder.append(",#{").append(columnDefinition.getJavaFieldName()).append("}");
 		}
-
 		String result = stringBuilder.toString();
 		return result.substring(1, result.length());
 	}
@@ -209,13 +201,11 @@ public class Generator {
 	private String getBaseColumnsListExcludePK(List<ColumnDefinition> columnDefinitionList){
 
 		StringBuilder stringBuilder = new StringBuilder();
-
 		for(ColumnDefinition columnDefinition : columnDefinitionList){
 			if(!columnDefinition.getIsPk()){
 				stringBuilder.append(",t.").append(columnDefinition.getColumnName());
 			}
 		}
-
 		String result = stringBuilder.toString();
 		return result.substring(1, result.length());
 	}
@@ -233,7 +223,6 @@ public class Generator {
 		for(ColumnDefinition columnDefinition : columnDefinitionList){
 			stringBuilder.append(",").append(columnDefinition.getColumnName());
 		}
-
 		String result = stringBuilder.toString();
 		return result.substring(1, result.length());
 	}

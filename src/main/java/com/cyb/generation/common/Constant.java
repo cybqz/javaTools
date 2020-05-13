@@ -10,7 +10,13 @@ public class Constant {
 
     public static final String LOCAL_DATE = "LocalDate";
 
-    public static final String LOCAL_TIME = "LocalTime";
-
     public static final String LOCAL_DATE_TIME = "LocalDateTime";
+
+    public static final String DATA_BASE_MYSQL = "mysql";
+
+    public static final String DATA_BASE_JTDS = "jtds";
+
+    public static final String DATA_BASE_SQLSERVER = "sqlserver";
+
+    public static final String DATA_BASE_ORACLE = "oracle";
 }
