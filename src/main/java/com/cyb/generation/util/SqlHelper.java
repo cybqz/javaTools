@@ -37,11 +37,9 @@ public class SqlHelper {
 	 * @param params
 	 * @return
 	 */
-	public static  List<Map<String, Object>> runSql(DataBaseConfig dataBaseConfig, String sql,
-													Map<String, Object> params) {
+	public static  List<Map<String, Object>> runSql(DataBaseConfig dataBaseConfig, String sql, Map<String, Object> params) {
 		
 		DataSource dataSource = buildDataSource(dataBaseConfig);
-		
 		String runSql = buildSqlWithParams(dataSource, sql, params);
 		String[] sqls = runSql.split(";");
 		Connection conn = null;
@@ -57,14 +55,8 @@ public class SqlHelper {
 				}
 				return runner.selectAll(sqls[sqlCount - 1],new Object[]{});
 			}
-			
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-			try {
-				conn.setReadOnly(true);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 			return null;
 		}finally{
 			if(conn != null){
@@ -80,13 +72,9 @@ public class SqlHelper {
 	// 参数绑定
 	private static String buildSqlWithParams(DataSource dataSource,String sql,Map<String, Object> params){
 		Configuration configuration = buildConfiguration(dataSource);
-		
-		TextSqlNode node = new TextSqlNode(sql);	
-		
+		TextSqlNode node = new TextSqlNode(sql);
 		DynamicSqlSource dynamicSqlSource = new DynamicSqlSource(configuration,node);
-		
 		BoundSql boundSql = dynamicSqlSource.getBoundSql(params);
-		
 		return boundSql.getSql();
 	}
 	
@@ -105,17 +93,14 @@ public class SqlHelper {
 		properties.setProperty(URL, dataBaseConfig.getJdbcUrl());
 		properties.setProperty(USERNAME, dataBaseConfig.getUsername());
 		properties.setProperty(PASSWORD, dataBaseConfig.getPassword());
-		
 		PooledDataSourceFactory pooledDataSourceFactory = new PooledDataSourceFactory();
 		pooledDataSourceFactory.setProperties(properties);
-
 		return pooledDataSourceFactory.getDataSource();
 	}
 	
 	private static Configuration buildConfiguration(DataSource dataSource){
 		TransactionFactory transactionFactory = new JdbcTransactionFactory();
 		Environment environment = new Environment("development", transactionFactory, dataSource);
-		
 		return new Configuration(environment);
 	}
 
